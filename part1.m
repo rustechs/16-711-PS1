@@ -9,14 +9,14 @@ function [r, p, y] = part1( target, link_length, min_roll, max_roll, min_pitch, 
     %    effector
     % link_length : Nx1 vectors of the lengths of the links
     % min_xxx, max_xxx are the vectors of the 
-    %    limits on the rluer paoll, pitch, yaw of each link.
+    %    limits on the roll, pitch, yaw of each link.
     % limits for a joint could be something like [-pi, pi]
     % obstacles: A Mx4 matrix where each row is [ x y z radius ] of a sphere
     %    obstacle. M obstacles.
     
     % Set initial search configuration
     % A good heuristic might be...
-    q0 = [];
+    q0 = zeros(3*length(link_length),1);
     
     % Hard joint limit constraints
     lb = [min_roll; min_pitch; min_yaw];
@@ -25,14 +25,14 @@ function [r, p, y] = part1( target, link_length, min_roll, max_roll, min_pitch, 
     % Solve for optimal IK solution
     % Don't use Jacobian or Hessian
     options = optimoptions(@fmincon,'OutputFcn',@outfun);
-    [qOpt,~,~] = fmincon(@(q,target)IKcost(q,target),q0,[],[],[],[],lb,ub,options);
+    [qOpt,~,~] = fmincon(@(q,target)IKcost(q,target),q0,[],[],[],[],lb,ub,[],options);
  
     r = qOpt(1:3:end);
     p = qOpt(2:3:end);
     y = qOpt(3:3:end);
     
     
-    function stop = outfun(qCurr,optimValues,state)
+    function stop = outfun(qCurr,~,state)
         stop = false;
         
         switch state
@@ -51,6 +51,7 @@ function [r, p, y] = part1( target, link_length, min_roll, max_roll, min_pitch, 
                
             otherwise
                 disp('wtf?');
+        end
     end
 
 end

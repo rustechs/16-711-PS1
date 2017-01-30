@@ -37,8 +37,15 @@ function [] = updateSnakeBotDrawing(ax,jointPoses,link_length,target,obstacles)
         links(i,:) = [jointPoses(i-1,:) jointPoses(i,:)];
     end
     
+    jointPoses
+    links
+    
     % might need to transpose each input
     plot3(ax,links(:,[1 4])',links(:,[2,5])',links(:,[3,6])','-o','LineWidth',10,'MarkerSize',10,'MarkerFacecolor','k');
 
-    drawnow limitrate
+    xlabel('X');
+    ylabel('Y');
+    zlabel('Z');
+    
+    drawnow
    
