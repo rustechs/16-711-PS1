@@ -7,6 +7,7 @@ function [] = updateSnakeBotDrawing(ax,r,p,y,link_length)
     n = length(link_length);
 
     % Compute the link endpoint locations
+    % Converts from RPY and link_lengths to cartesian coordinates
     % [xpi ypi zpi xdi ydi zdi]
     links = [];
 
