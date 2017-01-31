@@ -6,7 +6,7 @@
 clc; clear; close all
 
 %% Sample Inputs
-target = [5 5 5 1 0 0 0];
+target = [1 1 1 1 0 0 0];
 obstacles = [1 1 1 0.25; 6 6 6 0.5];
 link_length = [3 2 1];
 

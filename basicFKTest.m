@@ -5,7 +5,7 @@ clc; clear; close all
 % Test out some FK calculations
 
 % Robot definition
-link_length = [2 1];
+link_length = [3 2 1];
 
 target = [5 5 5 1 0 0 0];
 obstacles = [];
@@ -16,9 +16,7 @@ obstacles = [];
 
 % symbolicFunctionGeneration(link_length);
 
-rpyTestSet = [0 0 0 0 0 0; ...
-              0 pi/2 0 0 0 0; ...
-              0 0 pi/2 0 0 0]';
+rpyTestSet = [0 0 0 0 -pi/2 0 0 pi/2 0]';
 
 figure
 

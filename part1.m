@@ -16,7 +16,7 @@ function [r, p, y] = part1( target, link_length, min_roll, max_roll, min_pitch, 
     
     % Set initial search configuration
     % A good heuristic might be...
-    q0 = zeros(3*length(link_length),1);
+    q0 = ones(3*length(link_length),1);
     
     % Hard joint limit constraints
     lb = [min_roll; min_pitch; min_yaw];
@@ -24,8 +24,8 @@ function [r, p, y] = part1( target, link_length, min_roll, max_roll, min_pitch, 
     
     % Solve for optimal IK solution
     % Don't use Jacobian or Hessian
-    options = optimoptions(@fmincon,'OutputFcn',@outfun);
-    [qOpt,~,~] = fmincon(@(q,target)IKcost(q,target),q0,[],[],[],[],lb,ub,[],options);
+    % options = optimoptions(@fmincon,'OutputFcn',@outfun,'Display','iter','MaxFunEvals',1000000,'DiffMaxChange',Inf);
+    qOpt = fmincon(@(q,target)IKcost(q,target),q0,[],[]); % [],[],lb,ub,[],options);
  
     r = qOpt(1:3:end);
     p = qOpt(2:3:end);
