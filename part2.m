@@ -32,6 +32,9 @@ function [r, p, y] = part2( target, link_length, min_roll, max_roll, min_pitch, 
     p = qOpt(2:3:end);
     y = qOpt(3:3:end);
     
+    [pDist, qDist] = poseTargetDistance(qOpt,target);
+    
+    fprintf('The final pose error is: %g [m] in position and %g [] in normalized quaternion distance',pDist,qDist);
     
     function stop = outfun(qCurr,~,state)
         stop = false;

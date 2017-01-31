@@ -1,4 +1,4 @@
-function [pDist qDist] = poseTargetDistance(q,target)
+function [pDist, qDist] = poseTargetDistance(q,target)
 
     pose = FK_fn(q);
 

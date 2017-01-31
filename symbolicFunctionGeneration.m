@@ -2,6 +2,7 @@ function symbolicFunctionGeneration(link_length)
 %% Symbolic Forward Kinematics and Cost Function
 
     n = length(link_length);
+    R = sum(link_length);
 
     rpy = sym('rpy',[n 3],'real');
     tgt = sym('tgt',[7 1],'real');
@@ -58,8 +59,12 @@ function symbolicFunctionGeneration(link_length)
     linkOrientations = matlabFunction(q,'File','linkOrientations','Vars',{rpy});
     
     FK = symfun([p_ef q_ef]',rpy);
-    Cweights = [1 1 1 2 2 2 2]';
-    C = symfun(sum(((tgt-[p_ef q_ef]').*Cweights).^2),[tgt; rpy]);
+    pCost = sum(((tgt(1:3)-p_ef')/2*R).^2);
+    qCost = 1-dot(tgt(4:7),q_ef')^2;
+    % Relative position and orientation weights in cost function
+    Cweight = [1 1];
+    
+    C = symfun(dot([pCost qCost],Cweight),[tgt; rpy]);
     Cgrad = symfun(gradient(sum((tgt-[p_ef q_ef]').^2),rpy),[tgt; rpy]);
     % Chess = symfun(hessian(sum((tgt-[p_ef q_ef]').^2),rpy),[tgt; rpy]);
 
