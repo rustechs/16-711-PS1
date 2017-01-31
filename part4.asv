@@ -37,12 +37,16 @@ for i=1:size(q0vect,2)
     y(1:3,i) = qOpt(3:3:end);
     cost(i) = valOpt;
 end 
-%sort lowest cost to highest cost    
-[~,idx]=sort(cost,'ascend');
-r=r(:,idx);
-p=p(:,idx);
-y=y(:,idx);
+    
+[sorted,idx]=sort(cost,'ascend');
+cost(idx(1:3));
+r=r(:,idx)
+p=p(:,idx)
+y=y(:,idx)
 
+best_roll=[r(:,idx(1)),r(:,idx(2)),r(:,idx(3))]
+best_pitch=[p(:,idx(1)),p(:,idx(2)),p(:,idx(3))]
+best_yaw=[y(:,idx(1)),y(:,idx(2)),y(:,idx(3))]
 
 
 
