@@ -1,5 +1,6 @@
-function [r, p, y] = part2( target, link_length, min_roll, max_roll, min_pitch, max_pitch, min_yaw, max_yaw, obstacles )
-%% Function that uses analytic gradients to do optimization for inverse kinematics in a snake robot
+function [r, p, y] = part3( target, link_length, min_roll, max_roll, min_pitch, max_pitch, min_yaw, max_yaw, obstacles )
+%% Various optimization algorithms are compared using fmincon.
+
 
 %% Outputs 
   % [r, p, y] = roll, pitch, yaw vectors of the N joint angles
@@ -24,14 +25,14 @@ function [r, p, y] = part2( target, link_length, min_roll, max_roll, min_pitch, 
     
     % Solve for optimal IK solution
     % Don't use Jacobian or Hessian
-    options = optimoptions(@fmincon,'OutputFcn',@outfun,'Display','iter','MaxFunEvals',2.5e3,'SpecifyObjectiveGradient',true);
+    options = optimoptions(@fmincon,'OutputFcn',@outfun,'Display','iter','MaxFunEvals',2.5e3,'SpecifyObjectiveGradient',true,'Algorithm','sqp');
+%     options = optimoptions(@fmincon,'OutputFcn',@outfun,'Display','iter','MaxFunEvals',1000000,'SpecifyObjectiveGradient',true,'Algorithm','active-set');
 %     qOpt = fmincon(@(q)IKcost(q,target),q0,[],[],[],[],lb,ub,[],options);
     qOpt = fmincon(@(q)IKcost(q,target),q0,[],[],[],[],lb,ub,@(q)sphereCollision(q,obstacles),options);
  
     r = qOpt(1:3:end);
     p = qOpt(2:3:end);
     y = qOpt(3:3:end);
-    
     
     function stop = outfun(qCurr,~,state)
         stop = false;

@@ -10,17 +10,17 @@ for i=2:size(jointCoords,1)
         v=jointCoords(i-1,:);
         w=jointCoords(i,:);
         d=norm(cross(w-v,p-v))/norm(w-v);
-        if d<obstacles(j,4)
+        if d<1.1*obstacles(j,4)
             t =dot(p - v, w - v) / norm(w-v);
             if t<norm(w-v)
-                A(i,j)=obstacles(j,4)-d;
+                A(i,j)=1.1*obstacles(j,4)-d;
             else
-                A(i,j)=obstacles(j,4)-sqrt((t-norm(w-v))^2+d^2);
+                A(i,j)=1.1*obstacles(j,4)-sqrt((t-norm(w-v))^2+d^2);
             end
         else
-            A(i,j)=obstacles(j,4)-d;
+            A(i,j)=1.1*obstacles(j,4)-d;
                 
         end
     end
 end
-c=max(A,[],2);
+c=max((A).^3,[],2);

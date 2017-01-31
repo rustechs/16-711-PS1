@@ -24,8 +24,9 @@ function [r, p, y] = part1( target, link_length, min_roll, max_roll, min_pitch, 
     
     % Solve for optimal IK solution
     % Don't use Jacobian or Hessian
-    options = optimoptions(@fmincon,'OutputFcn',@outfun,'Display','iter','MaxFunEvals',1000000,'DiffMaxChange',Inf);
-    qOpt = fmincon(@(q)IKcost(q,target),q0,[],[],[],[],lb,ub,[],options);
+    options = optimoptions(@fmincon,'OutputFcn',@outfun,'Display','iter','MaxFunEvals',2.5e3);
+%     qOpt = fmincon(@(q)IKcost(q,target),q0,[],[],[],[],lb,ub,[],options);
+    qOpt = fmincon(@(q)IKcost(q,target),q0,[],[],[],[],lb,ub,@(q)sphereCollision(q,obstacles),options);
  
     r = qOpt(1:3:end);
     p = qOpt(2:3:end);
@@ -40,15 +41,18 @@ function [r, p, y] = part1( target, link_length, min_roll, max_roll, min_pitch, 
                 disp('Starting optimization process');
                 
                 % Create figure
-                figure    
+                figure
+                view(20,20);
 
             case 'iter'
 
                 % Update figure
                 updateSnakeBotDrawing(gca,jointPoses(qCurr),linkOrientations(qCurr),link_length,target,obstacles);
                 
-                case 'done'
+            case 'done'
                
+                
+                
             otherwise
                 disp('wtf?');
         end

@@ -63,7 +63,7 @@ function env = displayQuatCurve( r, q, axiS, axis_order )
     zlabel(axis_names(axis_order(3)));    
     
     %% How should the axis be scaled?
-    autoscaling = 0;
+    autoscaling = 1;
     % Non auto scaling behaviour: Show the smallest possible window of the
     % coordinates, plot may not be scaled correctly.
     scaleMin = min(r) .* [1 1 1];

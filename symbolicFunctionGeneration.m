@@ -58,7 +58,8 @@ function symbolicFunctionGeneration(link_length)
     linkOrientations = matlabFunction(q,'File','linkOrientations','Vars',{rpy});
     
     FK = symfun([p_ef q_ef]',rpy);
-    C = symfun(sum((tgt-[p_ef q_ef]').^2),[tgt; rpy]);
+    Cweights = [1 1 1 2 2 2 2]';
+    C = symfun(sum(((tgt-[p_ef q_ef]').*Cweights).^2),[tgt; rpy]);
     Cgrad = symfun(gradient(sum((tgt-[p_ef q_ef]').^2),rpy),[tgt; rpy]);
     % Chess = symfun(hessian(sum((tgt-[p_ef q_ef]').^2),rpy),[tgt; rpy]);
 
