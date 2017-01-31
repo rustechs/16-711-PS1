@@ -1,8 +1,6 @@
 function symbolicFunctionGeneration(link_length)
 %% Symbolic Forward Kinematics and Cost Function
 
-    
-
     n = length(link_length);
 
     rpy = sym('rpy',[n 3],'real');
@@ -57,7 +55,8 @@ function symbolicFunctionGeneration(link_length)
     rpy = reshape(rpy',3*n,1);
     
     jointPoses = matlabFunction(p,'File','jointPoses','Vars',{rpy});
-
+    linkOrientations = matlabFunction(q,'File','linkOrientations','Vars',{rpy});
+    
     FK = symfun([p_ef q_ef]',rpy);
     C = symfun(sum((tgt-[p_ef q_ef]').^2),[tgt; rpy]);
     Cgrad = symfun(gradient(sum((tgt-[p_ef q_ef]').^2),rpy),[tgt; rpy]);

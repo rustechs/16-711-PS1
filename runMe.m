@@ -6,21 +6,21 @@
 clc; clear; close all
 
 %% Sample Inputs
-target = [1 1 1 1 0 0 0];
+target = [2 1 2 0 -1 0 0]';
 obstacles = [1 1 1 0.25; 6 6 6 0.5];
 link_length = [3 2 1];
 
-min_roll = [-pi/2 -pi/2 -pi/2];
-max_roll = [ pi/2  pi/2 pi/2];
-min_pitch = [-pi/2 -pi/2 -pi/2];
-max_pitch = [ pi/2  pi/2 pi/2];
-min_yaw = [-pi/2 -pi/2 -pi/2];
-max_yaw = [ pi/2  pi/2 pi/2];
+min_roll = -pi*ones(length(link_length),1);
+max_roll = pi*ones(length(link_length),1);
+min_pitch = -pi*ones(length(link_length),1);
+max_pitch = pi*ones(length(link_length),1);
+min_yaw = -pi*ones(length(link_length),1);
+max_yaw = pi*ones(length(link_length),1);
 
 % Call this to generate the symbolic FK and cost functions, as well as
 % the corresponding matlab function files
 
-% symbolicFunctionGeneration(link_length);
+symbolicFunctionGeneration(link_length);
 
 %% Part 1
 
