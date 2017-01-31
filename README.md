@@ -27,3 +27,4 @@ Because the forward kinematics was calculated symbolically, the gradient for the
 ## Part 3
 
 ## Part 4
+Local minima can be found for various initial guesses of link configurations. In order to try to find different local minima, n random initial guesses were generated for roll, pitch, and yaw for each link. 
