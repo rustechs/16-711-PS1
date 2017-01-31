@@ -27,4 +27,4 @@ Because the forward kinematics was calculated symbolically, the gradient for the
 ## Part 3
 
 ## Part 4
-Local minima can be found for various initial guesses of link configurations. In order to try to find different local minima, n random initial guesses were generated for roll, pitch, and yaw for each link. 
+Local minima can be found for various initial guesses of link configurations. In order to try to find different local minima, n random initial guesses were generated for roll, pitch, and yaw in each link. fmincon optimization was then run for each set of initial guesses. The roll, pitch, yaw matrix of the end effector was ranked based on minimum cost. The roll, pitch, and yaw of the end effector in conditions representing the lowest cost were all different. However, visual inspection of the 3D configuration appears to be the same for the cost minima. Therefore, the optimizer was able to find the absolute cost minima given a few different initial configurations.
